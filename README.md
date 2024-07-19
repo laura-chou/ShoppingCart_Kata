@@ -7,42 +7,46 @@
 ```
 product
   addItem("Iceberg", 1)
-cart
-  new ShoppingCart {
-    products = {
-      new Product {
-        name = "Iceberg",
-        quantity = 1,
-        price = 2.17
-      }
-    }
-  }
---------------------------------
+print
+---------------------------------------
+| Product    | Price     | Quantity   |
+| ---------- | --------- | ---------- |
+| Iceberg    | 2.17 €    | 1          |
+|-------------------------------------|
+| Promotion:                          |
+|-------------------------------------|
+| Total products: 1                   |
+| Total price: 2.17 €                 |
+---------------------------------------
+========================================
 product
   addItem("Iceberg", 2)
   addItem("Tomato", 1)
-cart
-  new ShoppingCart {
-    products = {
-      new Product {
-        name = "Iceberg",
-        quantity = 2,
-        price = 4.34
-      },
-      new Product {
-        name = "Tomato",
-        quantity = 1,
-        price = 0.73
-      }
-    }
-  }
---------------------------------
+print
+---------------------------------------
+| Product    | Price     | Quantity   |
+| ---------- | --------- | ---------- |
+| Iceberg    | 4.34 €    | 2          |
+| Tomato     | 0.73 €    | 1          |
+|-------------------------------------|
+| Promotion:                          |
+|-------------------------------------|
+| Total products: 3                   |
+| Total price: 5.07 €                 |
+---------------------------------------
+========================================
 product
   addItem("Corn", 0)
-cart
-  new ShoppingCart {
-    products = {}
-  }
+print
+---------------------------------------
+| Product    | Price     | Quantity   |
+| ---------- | --------- | ---------- |
+|-------------------------------------|
+| Promotion:                          |
+|-------------------------------------|
+| Total products: 0                   |
+| Total price: 0.00 €                 |
+---------------------------------------
 ```
 
 #### DeleteItemToCart
@@ -51,123 +55,58 @@ product
   addItem("Chicken", 1)
   addItem("Bread", 1)
   deleteItem("Bread", 1)
-cart
-  new ShoppingCart {
-    products = {
-      new Product {
-        name = "Chicken",
-        quantity = 1,
-        price = 1.83
-      }  
-    }
-  }
---------------------------------
+print
+---------------------------------------
+| Product    | Price     | Quantity   |
+| ---------- | --------- | ---------- |
+| Chicken    | 1.83 €    | 1          |
+|-------------------------------------|
+| Promotion:                          |
+|-------------------------------------|
+| Total products: 1                   |
+| Total price: 1.83 €                 |
+---------------------------------------
+========================================
 product
   addItem("Chicken", 1)
   addItem("Bread", 2)
   deleteItem("Bread", 1)
-cart
-  new ShoppingCart {
-    products = {
-      new Product {
-        name = "Chicken",
-        quantity = 1,
-        price = 1.83
-      },
-      new Product {
-        name = "Bread",
-        quantity = 1,
-        price = 0.88
-      }
-    }
-  }
+print
+---------------------------------------
+| Product    | Price     | Quantity   |
+| ---------- | --------- | ---------- |
+| Chicken    | 1.83 €    | 1          |
+| Bread      | 0.88 €    | 1          |
+|-------------------------------------|
+| Promotion:                          |
+|-------------------------------------|
+| Total products: 2                   |
+| Total price: 2.71 €                 |
+---------------------------------------
 ```
 
-#### CalculateTotalProducts
+#### UseDiscounts
 ```
-product
-  addItem("Chicken", 1)
-  addItem("Bread", 2)
-  addItem("Corn", 2)
-cart
-  new ShoppingCart {
-    products = {
-      new Product {
-        name = "Chicken",
-        quantity = 1,
-        price = 1.83
-      },
-      new Product {
-        name = "Bread",
-        quantity = 2,
-        price = 1.76
-      },
-      new Product {
-        name = "Corn",
-        quantity = 2,
-        price = 3
-      }
-    },
-    totalProducts = 5
-  }
-```
-
-#### CalculateTotalPrice
-```
-product
-  addItem("Chicken", 1)
-  addItem("Bread", 2)
-  addItem("Corn", 2)
-cart
-  new ShoppingCart {
-    products = {
-      new Product {
-        name = "Chicken",
-        quantity = 1,
-        price = 1.83
-      },
-      new Product {
-        name = "Bread",
-        quantity = 2,
-        price = 1.76
-      },
-      new Product {
-        name = "Corn",
-        quantity = 2,
-        price = 3
-      }
-    },
-    totalProducts = 5,
-    totalPrice = 6.59
-  }
---------------------------------
 product
   addItem("Iceberg", 1)
   addItem("Tomato", 1)
   applyDiscount("PROMO_5")
-cart
-  new ShoppingCart {
-    products = {
-      new Product {
-        name = "Iceberg",
-        quantity = 1,
-        price = 2.17
-      },
-      new Product {
-        name = "Tomato",
-        quantity = 1,
-        price = 0.73
-      }
-    },
-    promotion = new Discount
-    {
-      code = "PROMO_5",
-      amount = 0.05
-    },
-    totalProducts = 2,
-    totalPrice = 2.75
-  }
---------------------------------
+print
+---------------------------------------
+| Product    | Price     | Quantity   |
+| ---------- | --------- | ---------- |
+| Iceberg    | 6.51 €    | 3          |
+| Tomato     | 0.73 €    | 1          |
+| Chicken    | 1.83 €    | 1          |
+| Bread      | 1.76 €    | 2          |
+| Corn       | 1.50 €    | 1          |
+|-------------------------------------|
+| Promotion: 5% off with code PROMO_5 |
+|-------------------------------------|
+| Total products: 2                   |
+| Total price: 2.71 €                 |
+---------------------------------------
+========================================
 product
   addItem("Chicken", 3)
   applyDiscount("PROMO_10")
