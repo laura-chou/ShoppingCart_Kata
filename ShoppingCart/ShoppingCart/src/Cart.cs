@@ -4,7 +4,15 @@
     {
         public string printShoppingCart()
         {
-            throw new NotImplementedException();
+            return "-----------------------------------------\n" +
+                "| Product    | Price      | Quantity    |\n" +
+                "| ---------- | ---------- | ----------- |\n" +
+                "|---------------------------------------|\n" +
+                "| Promotion:                            |\n" +
+                "|---------------------------------------|\n" +
+                "| Total products: 0                     |\n" +
+                "| Total price: 0.00 €                   |\n" +
+                "-----------------------------------------";
         }
     }
 }
