@@ -8,6 +8,7 @@ namespace ShoppingCart
     public class Tests
     {
         private Cart _cart;
+
         [SetUp]
         public void A00_StepUp ()
         {
@@ -17,8 +18,19 @@ namespace ShoppingCart
         [Test]
         public void A01_EmptyCart()
         {
+            string expected = GenerateExpectedString();
+            AssertResultShouldReturn(expected);
+        }
+
+        private void AssertResultShouldReturn(string expected)
+        {
             var actual = _cart.printShoppingCart();
-            var expected = 
+            actual.Should().Be(expected);
+        }
+
+        private string GenerateExpectedString()
+        {
+            return 
                 "-----------------------------------------\n" +
                 "| Product    | Price      | Quantity    |\n" +
                 "| ---------- | ---------- | ----------- |\n" +
@@ -28,7 +40,6 @@ namespace ShoppingCart
                 "| Total products: 0                     |\n" +
                 "| Total price: 0.00 £á                   |\n" +
                 "-----------------------------------------";
-            actual.Should().Be(expected);
         }
     }
 }
