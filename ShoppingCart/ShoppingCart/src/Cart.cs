@@ -16,5 +16,10 @@
                $"| Total price: {totalPrice.ToString("F2")} €                   |\n" +
                 "-----------------------------------------";
         }
+
+        internal void addItem(string v1, int v2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
