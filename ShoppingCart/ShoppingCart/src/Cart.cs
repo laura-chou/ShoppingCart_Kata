@@ -5,10 +5,12 @@ namespace ShoppingCart.src
     public class Cart
     {
         private List<Product> _cart;
+        private Product _product;
 
         public Cart()
         {
             _cart = new List<Product>();
+            _product = new Product();
         }
 
         public string printShoppingCart()
@@ -41,12 +43,17 @@ namespace ShoppingCart.src
 
         public void addItem(string productName, int quantity)
         {
-            _cart.Add(new Product
+            var product = _product.getProduct(productName);
+            
+            if (product != null)
             {
-                Name = productName,
-                Price = 1.79,
-                Quantity = quantity
-            });
+                _cart.Add(new Product
+                {
+                    Name = product.Name,
+                    Price = product.Price * quantity,
+                    Quantity = quantity
+                });
+            }
         }
     }
 }
