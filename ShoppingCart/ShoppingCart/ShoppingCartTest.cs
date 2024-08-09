@@ -21,12 +21,25 @@ namespace ShoppingCart
             string expected = GenerateExpectedString();
             AssertResultShouldReturn(expected);
         }
-
-        [Test]
-        public void A02_AddItemToCart()
+        
+        [TestCaseSource(nameof(AddItemToCartTestCases))]
+        public void A02_AddItemToCart(Dictionary<string, int> items,string expected)
         {
-            _cart.addItem("Iceberg", 1);
-            string expected = @"
+            foreach (var item in items)
+            {
+                _cart.addItem(item.Key, item.Value);
+            }
+            AssertResultShouldReturn(expected);
+        }
+
+        private static IEnumerable<TestCaseData> AddItemToCartTestCases()
+        {
+            yield return new TestCaseData(
+                new Dictionary<string, int>
+                {
+                    { "Iceberg", 1 }
+                },
+                @"
             -----------------------------------------
             | Product    | Price      | Quantity    |
             | ---------- | ---------- | ----------- |
@@ -36,8 +49,7 @@ namespace ShoppingCart
             |---------------------------------------|
             | Total products: 1                     |
             | Total price: 1.79 £á                   |
-            -----------------------------------------";
-            AssertResultShouldReturn(expected);
+            -----------------------------------------");
         }
 
         private void AssertResultShouldReturn(string expected)

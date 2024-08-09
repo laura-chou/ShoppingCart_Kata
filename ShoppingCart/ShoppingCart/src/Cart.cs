@@ -45,7 +45,6 @@ namespace ShoppingCart.src
             var totalPrice = _cart.Sum(p => p.Price);
             string productRows = BuildProductRows();
 
-
             return ReplacePlaceholders(productRows, totalProducts, totalPrice);
         }
 
