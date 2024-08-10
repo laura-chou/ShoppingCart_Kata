@@ -51,7 +51,8 @@ namespace ShoppingCart
             |---------------------------------------|
             | Total products: 1                     |
             | Total price: 1.79 £á                   |
-            -----------------------------------------");
+            -----------------------------------------")
+                    .SetArgDisplayNames("add Iceberg");
 
                 yield return new TestCaseData(
                     new Dictionary<string, int>
@@ -69,7 +70,8 @@ namespace ShoppingCart
             |---------------------------------------|
             | Total products: 3                     |
             | Total price: 4.18 £á                   |
-            -----------------------------------------");
+            -----------------------------------------")
+                    .SetArgDisplayNames("add Iceberg and Tomato");
             }
         }
 
