@@ -53,8 +53,7 @@ namespace ShoppingCart.src
             StringBuilder sb = new StringBuilder();
             foreach (var product in _cart)
             {
-                var price = product.Price * product.Quantity;
-                sb.AppendLine($"| {product.Name.PadRight(10)} | {$"{price.ToString("F2")} €".PadRight(10)} | {product.Quantity.ToString().PadRight(11)} |");
+                sb.AppendLine($"| {product.Name.PadRight(10)} | {$"{product.Price.ToString("F2")} €".PadRight(10)} | {product.Quantity.ToString().PadRight(11)} |");
                 sb.Append(string.Empty.PadRight(12));
             }
 
