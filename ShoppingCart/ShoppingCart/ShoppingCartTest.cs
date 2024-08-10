@@ -1,6 +1,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using ShoppingCart.src;
+using System.Collections;
 
 namespace ShoppingCart
 {
@@ -32,14 +33,15 @@ namespace ShoppingCart
             AssertResultShouldReturn(expected);
         }
 
-        private static IEnumerable<TestCaseData> AddItemToCartTestCases()
+        private static IEnumerable AddItemToCartTestCases
         {
-            yield return new TestCaseData(
-                new Dictionary<string, int>
-                {
-                    { "Iceberg", 1 }
-                },
-                @"
+            get
+            {
+                yield return new TestCaseData(
+                    new Dictionary<string, int>
+                    {
+                        { "Iceberg", 1 }
+                    }, @"
             -----------------------------------------
             | Product    | Price      | Quantity    |
             | ---------- | ---------- | ----------- |
@@ -50,6 +52,25 @@ namespace ShoppingCart
             | Total products: 1                     |
             | Total price: 1.79 £á                   |
             -----------------------------------------");
+
+                yield return new TestCaseData(
+                    new Dictionary<string, int>
+                    {
+                        { "Iceberg", 2 },
+                        { "Tomato", 1 }
+                    }, @"
+            -----------------------------------------
+            | Product    | Price      | Quantity    |
+            | ---------- | ---------- | ----------- |
+            | Iceberg    | 3.58 £á     | 2           |
+            | Tomato     | 0.60 £á     | 1           |
+            |---------------------------------------|
+            | Promotion:                            |
+            |---------------------------------------|
+            | Total products: 3                     |
+            | Total price: 4.18 £á                   |
+            -----------------------------------------");
+            }
         }
 
         private void AssertResultShouldReturn(string expected)
