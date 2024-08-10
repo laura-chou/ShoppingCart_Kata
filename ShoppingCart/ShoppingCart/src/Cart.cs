@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using System.Xml.Linq;
 
 namespace ShoppingCart.src
 {
@@ -43,12 +42,12 @@ namespace ShoppingCart.src
         {
             var totalProducts = _cart.Sum(p => p.Quantity);
             var totalPrice = _cart.Sum(p => p.Price);
-            string productRows = BuildProductRows();
+            string productRows = buildProductRows();
 
-            return ReplacePlaceholders(productRows, totalProducts, totalPrice);
+            return replacePlaceholders(productRows, totalProducts, totalPrice);
         }
 
-        private string BuildProductRows()
+        private string buildProductRows()
         {
             StringBuilder sb = new StringBuilder();
             foreach (var product in _cart)
@@ -61,7 +60,7 @@ namespace ShoppingCart.src
             return sb.ToString();
         }
         
-        private string ReplacePlaceholders(string productRows, int totalProducts, double totalPrice)
+        private string replacePlaceholders(string productRows, int totalProducts, double totalPrice)
         {
             var replacements = new Dictionary<string, string>
             {
