@@ -26,7 +26,7 @@ namespace ShoppingCart.src
         public void addItem(string productName, int quantity)
         {
             var product = _product.getProduct(productName);
-
+            
             if (product != null)
             {
                 _cart.Add(new Product
@@ -45,6 +45,11 @@ namespace ShoppingCart.src
             string productRows = buildProductRows();
 
             return replacePlaceholders(productRows, totalProducts, totalPrice);
+        }
+
+        public void deleteItem(string key, int value)
+        {
+            throw new NotImplementedException();
         }
 
         private string buildProductRows()

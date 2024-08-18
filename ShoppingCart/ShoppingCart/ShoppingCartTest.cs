@@ -11,24 +11,38 @@ namespace ShoppingCart
         private Cart _cart;
 
         [SetUp]
-        public void A00_StepUp ()
+        public void A00_StepUp()
         {
-            _cart = new Cart ();
+            _cart = new Cart();
         }
 
         [Test]
         public void A01_EmptyCart()
         {
-            string expected = GenerateExpectedString();
+            string expected = GenerateEmptyExpectedString();
             AssertResultShouldReturn(expected);
         }
-        
+
         [TestCaseSource(nameof(AddItemToCartTestCases))]
-        public void A02_AddItemToCart(Dictionary<string, int> items,string expected)
+        public void A02_AddItemToCart(Dictionary<string, int> addItems, string expected)
         {
-            foreach (var item in items)
+            foreach (var item in addItems)
             {
                 _cart.addItem(item.Key, item.Value);
+            }
+            AssertResultShouldReturn(expected);
+        }
+
+        [TestCaseSource(nameof(DeleteItemToCartTestCases))]
+        public void A03_DeleteItemToCart(Dictionary<string, int> addItems, Dictionary<string, int> deleteItems, string expected)
+        {
+            foreach (var item in addItems)
+            {
+                _cart.addItem(item.Key, item.Value);
+            }
+            foreach (var item in deleteItems)
+            {
+                _cart.deleteItem(item.Key, item.Value);
             }
             AssertResultShouldReturn(expected);
         }
@@ -71,7 +85,35 @@ namespace ShoppingCart
             | Total products: 3                     |
             | Total price: 4.18 £á                   |
             -----------------------------------------")
-                    .SetArgDisplayNames("add Iceberg and Tomato");
+                    .SetArgDisplayNames("add Iceberg, Tomato");
+            }
+        }
+
+        private static IEnumerable DeleteItemToCartTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(
+                    new Dictionary<string, int>
+                    {
+                        { "Chicken", 1 },
+                        { "Bread", 1 }
+                    },
+                    new Dictionary<string, int>
+                    {
+                        { "Bread", 1 }
+                    }, @"
+            -----------------------------------------
+            | Product    | Price      | Quantity    |
+            | ---------- | ---------- | ----------- |
+            | Chicken    | 1.83 £á    | 1            |
+            |---------------------------------------|
+            | Promotion:                            |
+            |---------------------------------------|
+            | Total products: 1                     |
+            | Total price: 1.83 £á                   |
+            -----------------------------------------")
+                    .SetArgDisplayNames("add Chicken, Bread and delete Bread");
             }
         }
 
@@ -81,7 +123,7 @@ namespace ShoppingCart
             actual.Should().Be(expected);
         }
 
-        private string GenerateExpectedString()
+        private string GenerateEmptyExpectedString()
         {
             return @"
             -----------------------------------------
