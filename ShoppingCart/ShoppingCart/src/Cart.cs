@@ -47,9 +47,19 @@ namespace ShoppingCart.src
             return replacePlaceholders(productRows, totalProducts, totalPrice);
         }
 
-        public void deleteItem(string key, int value)
+        public void deleteItem(string productName, int quantity)
         {
-            throw new NotImplementedException();
+            var product = _cart.FirstOrDefault(p => p.Name == productName);
+
+            if (product != null)
+            {
+                product.Quantity -= quantity;
+
+                if (product.Quantity == 0)
+                {
+                    _cart.Remove(product);
+                }
+            }
         }
 
         private string buildProductRows()
