@@ -47,6 +47,17 @@ namespace ShoppingCart
             AssertResultShouldReturn(expected);
         }
 
+        [TestCaseSource(nameof(UseDiscountsTestCases))]
+        public void A04_UseDiscounts(Dictionary<string, int> addItems, string expected)
+        {
+            foreach (var item in addItems)
+            {
+                _cart.addItem(item.Key, item.Value);
+            }
+            _cart.applyDiscount("PROMO_5");
+            AssertResultShouldReturn(expected);
+        }
+
         private static IEnumerable AddItemToCartTestCases
         {
             get
@@ -137,6 +148,37 @@ namespace ShoppingCart
             | Total price: 2.71 £á                   |
             -----------------------------------------")
                     .SetArgDisplayNames("add 1 Chicken, 2 Bread and delete 1 Bread");
+            }
+        }
+
+        private static IEnumerable UseDiscountsTestCases
+        {
+            get
+            {
+                yield return new TestCaseData(
+                    new Dictionary<string, int>
+                    {
+                        { "Iceberg", 3 },
+                        { "Tomato", 1 },
+                        { "Chicken", 1 },
+                        { "Bread", 2 },
+                        { "Corn", 1 },
+                    }, @"
+            -----------------------------------------
+            | Product    | Price      | Quantity    |
+            | ---------- | ---------- | ----------- |
+            | Iceberg    | 6.51 £á     | 3           |
+            | Tomato     | 0.73 £á     | 1           |
+            | Chicken    | 1.83 £á     | 1           |
+            | Bread      | 1.76 £á     | 2           |
+            | Corn       | 1.50 £á     | 1           |
+            |---------------------------------------|
+            | Promotion: 5% off with code PROMO_5   |
+            |---------------------------------------|
+            | Total products: 8                     |
+            | Total price: 11.71 £á                  |
+            -----------------------------------------")
+                    .SetArgDisplayNames("use discount PROMO_5"); ;
             }
         }
 
