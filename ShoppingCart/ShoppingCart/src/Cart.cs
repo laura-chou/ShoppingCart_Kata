@@ -49,15 +49,20 @@ namespace ShoppingCart.src
 
         public void deleteItem(string productName, int quantity)
         {
-            var product = _cart.FirstOrDefault(p => p.Name == productName);
+            var cartProduct = _cart.FirstOrDefault(p => p.Name == productName);
 
-            if (product != null)
-            {
-                product.Quantity -= quantity;
-
-                if (product.Quantity == 0)
+            if (cartProduct != null)
+            {                
+                var product = _product.getProduct(productName);
+                if (product != null)
                 {
-                    _cart.Remove(product);
+                    cartProduct.Price -= product.Price;
+                }
+
+                cartProduct.Quantity -= quantity;
+                if (cartProduct.Quantity == 0)
+                {
+                    _cart.Remove(cartProduct);
                 }
             }
         }
