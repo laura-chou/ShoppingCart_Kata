@@ -66,7 +66,7 @@ namespace ShoppingCart
             | Total products: 1                     |
             | Total price: 2.17 £á                   |
             -----------------------------------------")
-                    .SetArgDisplayNames("add Iceberg");
+                    .SetArgDisplayNames("add 1 Iceberg");
 
                 yield return new TestCaseData(
                     new Dictionary<string, int>
@@ -85,7 +85,7 @@ namespace ShoppingCart
             | Total products: 3                     |
             | Total price: 5.07 £á                   |
             -----------------------------------------")
-                    .SetArgDisplayNames("add Iceberg, Tomato");
+                    .SetArgDisplayNames("add 2 Iceberg, 1 Tomato");
             }
         }
 
@@ -113,7 +113,30 @@ namespace ShoppingCart
             | Total products: 1                     |
             | Total price: 1.83 £á                   |
             -----------------------------------------")
-                    .SetArgDisplayNames("add Chicken, Bread and delete Bread");
+                    .SetArgDisplayNames("add 1 Chicken, 1 Bread and delete 1 Bread");
+
+                yield return new TestCaseData(
+                    new Dictionary<string, int>
+                    {
+                        { "Chicken", 1 },
+                        { "Bread", 2 }
+                    },
+                    new Dictionary<string, int>
+                    {
+                        { "Bread", 1 }
+                    }, @"
+            -----------------------------------------
+            | Product    | Price      | Quantity    |
+            | ---------- | ---------- | ----------- |
+            | Chicken    | 1.83 £á     | 1           |
+            | Bread      | 0.88 £á     | 1           |
+            |---------------------------------------|
+            | Promotion:                            |
+            |---------------------------------------|
+            | Total products: 2                     |
+            | Total price: 2.71 £á                   |
+            -----------------------------------------")
+                    .SetArgDisplayNames("add 1 Chicken, 2 Bread and delete 1 Bread");
             }
         }
 
