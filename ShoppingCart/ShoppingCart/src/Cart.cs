@@ -9,13 +9,14 @@ namespace ShoppingCart.src
             | Product    | Price      | Quantity    |
             | ---------- | ---------- | ----------- |
             {ProductRows}
-            | Promotion: {Promotion}                           |
+            | Promotion: {Promotion}|
             |---------------------------------------|
             | Total products: {TotalProducts}                     |
-            | Total price: {TotalPrice} €                   |
+            | Total price: {TotalPrice}|
             -----------------------------------------";
 
         private List<Product> _cart;
+        private Discount? _useDiscount;
         private Product _product;
         public Cart()
         {
@@ -43,8 +44,14 @@ namespace ShoppingCart.src
             var totalProducts = _cart.Sum(p => p.Quantity);
             var totalPrice = _cart.Sum(p => p.Price);
             string productRows = buildProductRows();
-
-            return replacePlaceholders(productRows, totalProducts, totalPrice);
+            var promotion = string.Empty;
+            if (_useDiscount != null)
+            {
+                var discountAmount = totalPrice * _useDiscount.Amount;
+                totalPrice = totalPrice - discountAmount;
+                promotion = $"{_useDiscount.Amount * 100}% off with code {_useDiscount.Code}";
+            }
+            return replacePlaceholders(productRows, promotion, totalProducts, totalPrice);
         }
 
         public void deleteItem(string productName, int quantity)
@@ -80,14 +87,14 @@ namespace ShoppingCart.src
             return sb.ToString();
         }
         
-        private string replacePlaceholders(string productRows, int totalProducts, double totalPrice)
+        private string replacePlaceholders(string productRows, string promotion, int totalProducts, double totalPrice)
         {
             var replacements = new Dictionary<string, string>
             {
                 { "ProductRows", productRows },
-                { "Promotion", string.Empty },
+                { "Promotion", promotion.PadRight(27) },
                 { "TotalProducts", totalProducts.ToString() },
-                { "TotalPrice", totalPrice.ToString("F2") }
+                { "TotalPrice", $"{totalPrice.ToString("F2")} €".PadRight(25) }
             };
 
             foreach (var item in replacements)
@@ -97,6 +104,11 @@ namespace ShoppingCart.src
             }
 
             return printTemplate;
+        }
+
+        public void applyDiscount(string discountCode)
+        {
+            _useDiscount = new Discount { Code = "PROMO_5", Amount = 0.05 };
         }
     }
 }
