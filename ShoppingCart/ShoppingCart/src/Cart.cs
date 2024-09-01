@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 
 namespace ShoppingCart.src
 {
@@ -11,17 +11,20 @@ namespace ShoppingCart.src
             {ProductRows}
             | Promotion: {Promotion}|
             |---------------------------------------|
-            | Total products: {TotalProducts}                     |
+            | Total products: {TotalProducts}|
             | Total price: {TotalPrice}|
             -----------------------------------------";
 
         private List<Product> _cart;
         private Discount? _useDiscount;
         private Product _product;
+        private Discount _discount;
+
         public Cart()
         {
             _cart = new List<Product>();
             _product = new Product();
+            _discount = new Discount();
         }
 
         public void addItem(string productName, int quantity)
@@ -43,8 +46,8 @@ namespace ShoppingCart.src
         {
             var totalProducts = _cart.Sum(p => p.Quantity);
             var totalPrice = _cart.Sum(p => p.Price);
-            string productRows = buildProductRows();
             var promotion = string.Empty;
+            string productRows = buildProductRows();
             if (_useDiscount != null)
             {
                 var discountAmount = totalPrice * _useDiscount.Amount;
@@ -93,7 +96,7 @@ namespace ShoppingCart.src
             {
                 { "ProductRows", productRows },
                 { "Promotion", promotion.PadRight(27) },
-                { "TotalProducts", totalProducts.ToString() },
+                { "TotalProducts", totalProducts.ToString().PadRight(22) },
                 { "TotalPrice", $"{totalPrice.ToString("F2")} €".PadRight(25) }
             };
 
@@ -108,7 +111,7 @@ namespace ShoppingCart.src
 
         public void applyDiscount(string discountCode)
         {
-            _useDiscount = new Discount { Code = "PROMO_5", Amount = 0.05 };
+            _useDiscount = _discount.getDiscount(discountCode);
         }
     }
 }
