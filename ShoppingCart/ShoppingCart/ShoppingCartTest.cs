@@ -48,13 +48,13 @@ namespace ShoppingCart
         }
 
         [TestCaseSource(nameof(UseDiscountsTestCases))]
-        public void A04_UseDiscounts(Dictionary<string, int> addItems, string expected)
+        public void A04_UseDiscounts(Dictionary<string, int> addItems, string discount, string expected)
         {
             foreach (var item in addItems)
             {
                 _cart.addItem(item.Key, item.Value);
             }
-            _cart.applyDiscount("PROMO_5");
+            _cart.applyDiscount(discount);
             AssertResultShouldReturn(expected);
         }
 
@@ -163,7 +163,8 @@ namespace ShoppingCart
                         { "Chicken", 1 },
                         { "Bread", 2 },
                         { "Corn", 1 },
-                    }, @"
+                    },
+                    "PROMO_5", @"
             -----------------------------------------
             | Product    | Price      | Quantity    |
             | ---------- | ---------- | ----------- |
@@ -178,7 +179,25 @@ namespace ShoppingCart
             | Total products: 8                     |
             | Total price: 11.71 £á                  |
             -----------------------------------------")
-                    .SetArgDisplayNames("use discount PROMO_5"); ;
+                    .SetArgDisplayNames("use discount PROMO_5");
+
+                yield return new TestCaseData(
+                    new Dictionary<string, int>
+                    {
+                        { "Chicken", 3 }
+                    },
+                    "PROMO_10", @"
+            -----------------------------------------
+            | Product    | Price      | Quantity    |
+            | ---------- | ---------- | ----------- |
+            | Chicken    | 5.49 £á     | 3           |
+            |---------------------------------------|
+            | Promotion: 10% off with code PROMO_10 |
+            |---------------------------------------|
+            | Total products: 3                     |
+            | Total price: 4.94 £á                   |
+            -----------------------------------------")
+                    .SetArgDisplayNames("use discount PROMO_10");
             }
         }
 
