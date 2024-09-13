@@ -73,6 +73,22 @@ new Cart {
       }
     }
 }
+==========================================
+添加商品時提供無效的商品
+addItem("Apple", 2)
+
+expected
+new Cart {
+  Products = new List<Product>()
+}
+==========================================
+設置負數數量的商品
+addItem("Iceberg", -2)
+
+expected
+new Cart {
+  Products = new List<Product>()
+}
 ```
 #### DeleteItemToCart
 ```
@@ -184,48 +200,91 @@ addItem("Tomato", 5)
 addItem("Corn", 10)
 applyDiscount("PROMO_5")
 
-printShoppingCart
------------------------------------------
-| Product    | Price      | Quantity    |
-| ---------- | ---------- | ----------- |
-| Tomato     | 3.65 €     | 5           |
-| Corn       | 15.00 €    | 10          |
-|---------------------------------------|
-| Promotion: 5% off with code PROMO_5   |
-|---------------------------------------|
-| Total products: 15                    |
-| Total price: 17.72 €                  |
------------------------------------------
+expected
+new Cart {
+  Products = new List<Product> 
+  {
+    new Product { 
+      Name = "Tomato",
+      Quantity = 5,
+      Price = 3.65
+    },
+    new Product { 
+      Name = "Corn",
+      Quantity = 10,
+      Price = 15.00
+    }
+  },
+  Promotion = "5% off with code PROMO_5",
+  TotalPrice = 17.72
+}
 ==========================================
 對購物車應用 PROMO_10 折扣碼
 addItem("Chicken", 3)
 applyDiscount("PROMO_10")
 
-printShoppingCart
------------------------------------------
-| Product    | Price      | Quantity    |
-| ---------- | ---------- | ----------- |
-| Chicken    | 5.49 €     | 3           |
-|---------------------------------------|
-| Promotion: 10% off with code PROMO_10 |
-|---------------------------------------|
-| Total products: 3                     |
-| Total price: 4.94 €                   |
------------------------------------------
+expected
+new Cart {
+  Products = new List<Product> 
+  {
+    new Product { 
+      Name = "Chicken",
+      Quantity = 3,
+      Price = 5.49
+    }
+  },
+  Promotion = "10% off with code PROMO_10",
+  TotalPrice = 4.94
+}
 ==========================================
 應用無效的折扣碼
 addItem("Bread ", 2)
 applyDiscount("PROMO_100")
 
-printShoppingCart
+expected
+new Cart {
+  Products = new List<Product> 
+  {
+    new Product { 
+      Name = "Bread",
+      Quantity = 2,
+      Price = 1.76
+    }
+  },
+  Promotion = "",
+  TotalPrice = 1.76
+}
+```
+#### PrintShoppingcart
+```
+查看購物車中空狀態
+printShoppingCart()
+
+expected
 -----------------------------------------
 | Product    | Price      | Quantity    |
 | ---------- | ---------- | ----------- |
-| Bread      | 1.76 €     | 2           |
 |---------------------------------------|
 | Promotion:                            |
 |---------------------------------------|
+| Total products: 0                     |
+| Total price: 0.00 €                   |
+-----------------------------------------
+==========================================
+查看購物車中的商品
+addItem("Chicken", 2)
+applyDiscount("PROMO_5")
+printShoppingCart()
+
+expected
+-----------------------------------------
+| Product    | Price      | Quantity    |
+| ---------- | ---------- | ----------- |
+| Chicken    | 3.66 €     | 2           |
+|---------------------------------------|
+| Promotion: 5% off with code PROMO_5   |
+|---------------------------------------|
 | Total products: 2                     |
-| Total price: 1.76 €                   |
+| Total price: 3.66 €                   |
 -----------------------------------------
 ```
