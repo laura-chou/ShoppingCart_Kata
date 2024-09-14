@@ -2,19 +2,21 @@
 {
     public class Cart
     {
-        public List<Product>? Products { get; set; }
+        public List<Product>? Products = new List<Product>();
+        private Product _product { get; set; }
 
         public Cart() { 
-            Products = new List<Product>();
+            _product = new Product();
         }
 
         public void addItem(string product, int quantity)
         {
+            var price = _product.getProductPrice(product);
             Products.Add(new Product
             {
                 Name = product,
                 Quantity = quantity,
-                Price = 2.17
+                Price = price * quantity
             });
         }
     }
