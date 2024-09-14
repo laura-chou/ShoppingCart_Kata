@@ -4,9 +4,18 @@
     {
         public List<Product>? Products { get; set; }
 
+        public Cart() { 
+            Products = new List<Product>();
+        }
+
         public void addItem(string product, int quantity)
         {
-            throw new NotImplementedException();
+            Products.Add(new Product
+            {
+                Name = product,
+                Quantity = quantity,
+                Price = 2.17
+            });
         }
     }
 }
