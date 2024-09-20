@@ -69,7 +69,7 @@ new Cart {
       new Product { 
         Name = "Corn",
         Quantity = 1,
-        Price = 0.50
+        Price = 1.50
       }
     }
 }

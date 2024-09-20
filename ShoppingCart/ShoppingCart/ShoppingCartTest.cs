@@ -17,6 +17,11 @@ namespace ShoppingCart
         [Test]
         [TestCase(new[] { "Iceberg" }, new[] { 1 }, new[] { 2.17 })]
         [TestCase(new[] { "Iceberg" }, new[] { 2 }, new[] { 4.34 })]
+        [TestCase(
+            new[] { "Iceberg", "Tomato", "Chicken", "Bread", "Corn" },
+            new[] { 2, 1, 1, 1, 1 },
+            new[] { 4.34, 0.73, 1.83, 0.88, 1.50 }
+        )]
         public void A01_AddItemToCart(string[] productNames, int[] quantities, double[] prices)
         {
             var expected = new List<Product>();
