@@ -22,6 +22,7 @@ namespace ShoppingCart
             new[] { 2, 1, 1, 1, 1 },
             new[] { 4.34, 0.73, 1.83, 0.88, 1.50 }
         )]
+        [TestCase(new[] { "Apple" }, new[] { 2 }, new[] { 0.00 })]
         public void A01_AddItemToCart(string[] productNames, int[] quantities, double[] prices)
         {
             var expected = new List<Product>();
@@ -30,12 +31,15 @@ namespace ShoppingCart
             {
                 _cart.addItem(productNames[i], quantities[i]);
 
-                expected.Add(new Product
+                if (prices[i] > 0)
                 {
-                    Name = productNames[i],
-                    Quantity = quantities[i],
-                    Price = prices[i]
-                });
+                    expected.Add(new Product
+                    {
+                        Name = productNames[i],
+                        Quantity = quantities[i],
+                        Price = prices[i]
+                    });
+                }
             }
 
             AssertResultShouldReturn(expected);
