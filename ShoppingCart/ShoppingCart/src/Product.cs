@@ -8,7 +8,11 @@
 
         private List<Product> Products => new List<Product>
         {
-            new Product{ Name = "Iceberg", Price = 2.17 }
+            new Product{ Name = "Iceberg", Price = 2.17 },
+            new Product{ Name = "Tomato", Price = 0.73 },
+            new Product{ Name = "Chicken", Price = 1.83 },
+            new Product{ Name = "Bread", Price = 0.88 },
+            new Product{ Name = "Corn", Price = 1.50 }
         };
 
         public double getProductPrice(string productName)
