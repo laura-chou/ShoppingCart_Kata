@@ -9,24 +9,34 @@ namespace ShoppingCart
     {
         private Cart _cart;
         [SetUp]
-        public void A00_StepUp ()
+        public void A00_StepUp()
         {
-            _cart = new Cart ();
+            _cart = new Cart();
         }
 
         [Test]
-        public void A01_AddItemToCart()
+        [TestCase(new[] { "Iceberg" }, new[] { 1 }, new[] { 2.17 })]
+        public void A01_AddItemToCart(string[] productNames, int[] quantities, double[] prices)
         {
-            _cart.addItem("Iceberg", 1);
-            var expected = new List<Product>
+            var expected = new List<Product>();
+            
+            for (int i = 0; i < productNames.Length; i++)
+            {
+                _cart.addItem(productNames[i], quantities[i]);
+
+                expected.Add(new Product
                 {
-                    new Product 
-                    {
-                        Name = "Iceberg",
-                        Quantity = 1,
-                        Price = 2.17
-                    }
-                };
+                    Name = productNames[i],
+                    Quantity = quantities[i],
+                    Price = prices[i]
+                });
+            }
+
+            AssertResultShouldReturn(expected);
+        }
+
+        private void AssertResultShouldReturn(List<Product> expected)
+        {
             var actual = _cart.Products;
             actual.Should().BeEquivalentTo(expected);
         }
