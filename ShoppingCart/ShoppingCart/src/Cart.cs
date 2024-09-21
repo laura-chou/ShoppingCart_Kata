@@ -13,7 +13,7 @@
         {
             var price = _product.getProductPrice(product);
             
-            if (price > 0)
+            if (price > 0 && quantity > 0)
             {
                 Products.Add(new Product
                 {
