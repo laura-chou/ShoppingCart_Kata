@@ -8,6 +8,7 @@ namespace ShoppingCart
     public class Tests
     {
         private Cart _cart;
+
         [SetUp]
         public void A00_StepUp()
         {
@@ -23,6 +24,7 @@ namespace ShoppingCart
             new[] { 4.34, 0.73, 1.83, 0.88, 1.50 }
         )]
         [TestCase(new[] { "Apple" }, new[] { 2 }, new[] { 0.00 })]
+        [TestCase(new[] { "Iceberg" }, new[] { -2 }, new[] { 0.00 })]
         public void A01_AddItemToCart(string[] productNames, int[] quantities, double[] prices)
         {
             var expected = new List<Product>();
