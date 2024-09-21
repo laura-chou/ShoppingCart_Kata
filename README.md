@@ -108,6 +108,15 @@ new Cart {
     }
 }
 ==========================================
+從購物車中刪除一個數量大於原來商品數量的商品
+addItem("Chicken", 1)
+deleteItem("Chicken", 2)
+
+expected
+new Cart {
+  Products = new List<Product>()
+}
+==========================================
 從購物車中刪除一個不存在的商品
 addItem("Chicken", 1)
 deleteItem("Apple", 1)
