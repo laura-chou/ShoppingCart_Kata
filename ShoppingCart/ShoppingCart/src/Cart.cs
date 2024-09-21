@@ -26,7 +26,12 @@
 
         public void deleteItem(string product, int quantity)
         {
-            throw new NotImplementedException();
+            var item = Products.FirstOrDefault(p => p.Name == product);
+            
+            if (item != null)
+            {
+                item.Quantity -= quantity;
+            }   item.Price = _product.getProductPrice(item.Name) * item.Quantity;
         }
     }
 }
