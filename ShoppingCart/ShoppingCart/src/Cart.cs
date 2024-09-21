@@ -23,5 +23,10 @@
                 });
             }
         }
+
+        public void deleteItem(string product, int quantity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

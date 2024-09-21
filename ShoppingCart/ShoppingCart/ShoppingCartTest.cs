@@ -47,6 +47,26 @@ namespace ShoppingCart
             AssertResultShouldReturn(expected);
         }
 
+        [Test]
+        public void A02_DeleteItemToCart()
+        {
+            _cart.addItem("Bread", 2);
+            _cart.deleteItem("Bread", 1);
+
+            var expected = new List<Product>
+            {
+                {
+                  new Product {
+                    Name = "Bread",
+                    Quantity = 1,
+                    Price = 0.88
+                  }
+                }
+            };
+
+            AssertResultShouldReturn(expected);
+        }
+
         private void AssertResultShouldReturn(List<Product> expected)
         {
             var actual = _cart.Products;
