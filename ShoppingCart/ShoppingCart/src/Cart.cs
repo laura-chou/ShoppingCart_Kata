@@ -12,12 +12,16 @@
         public void addItem(string product, int quantity)
         {
             var price = _product.getProductPrice(product);
-            Products.Add(new Product
+            
+            if (price > 0)
             {
-                Name = product,
-                Quantity = quantity,
-                Price = price * quantity
-            });
+                Products.Add(new Product
+                {
+                    Name = product,
+                    Quantity = quantity,
+                    Price = price * quantity
+                });
+            }
         }
     }
 }
