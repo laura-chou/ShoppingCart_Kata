@@ -48,21 +48,31 @@ namespace ShoppingCart
         }
 
         [Test]
-        public void A02_DeleteItemToCart()
+        [TestCase(new[] { "Bread,2" }, new[] { "Bread,1" }, new[] { "Bread,1,0.88" })]
+        public void A02_DeleteItemToCart(string[] addItems, string[] deleteItems, string[] expectedItems)
         {
-            _cart.addItem("Bread", 2);
-            _cart.deleteItem("Bread", 1);
-
-            var expected = new List<Product>
+            foreach (var item in addItems)
             {
+                var data = item.Split(",");
+                _cart.addItem(data[0], int.Parse(data[1]));
+            }
+
+            foreach (var item in deleteItems)
+            {
+                var data = item.Split(",");
+                _cart.deleteItem(data[0], int.Parse(data[1]));
+            }
+
+            var expected = expectedItems.Select(item =>
+            {
+                var parts = item.Split(',');
+                return new Product
                 {
-                  new Product {
-                    Name = "Bread",
-                    Quantity = 1,
-                    Price = 0.88
-                  }
-                }
-            };
+                    Name = parts[0],
+                    Quantity = int.Parse(parts[1]),
+                    Price = double.Parse(parts[2])
+                };
+            }).ToList();
 
             AssertResultShouldReturn(expected);
         }
