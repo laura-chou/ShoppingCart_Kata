@@ -16,30 +16,30 @@ namespace ShoppingCart
         }
 
         [Test]
-        [TestCase(new[] { "Iceberg" }, new[] { 1 }, new[] { 2.17 })]
-        [TestCase(new[] { "Iceberg" }, new[] { 2 }, new[] { 4.34 })]
-        [TestCase(
-            new[] { "Iceberg", "Tomato", "Chicken", "Bread", "Corn" },
-            new[] { 2, 1, 1, 1, 1 },
-            new[] { 4.34, 0.73, 1.83, 0.88, 1.50 }
-        )]
-        [TestCase(new[] { "Apple" }, new[] { 2 }, new[] { 0.00 })]
-        [TestCase(new[] { "Iceberg" }, new[] { -2 }, new[] { 0.00 })]
-        public void A01_AddItemToCart(string[] productNames, int[] quantities, double[] prices)
+        [TestCase(new object[] { new[] { "Iceberg,1,2.17" } })]
+        [TestCase(new object[] { new[] { "Iceberg,2,4.34" } })]
+        [TestCase(new object[] { new[] { "Iceberg,2,4.34", "Tomato,1,0.73", "Chicken,1,1.83", "Bread,1,0.88", "Corn,1,1.50" } })]
+        [TestCase(new object[] { new[] { "Apple,2,0" } })]
+        [TestCase(new object[] { new[] { "Iceberg,-2,0" } })]
+        public void A01_AddItemToCart(string[] addItems)
         {
             var expected = new List<Product>();
-            
-            for (int i = 0; i < productNames.Length; i++)
+            foreach (var item in addItems)
             {
-                _cart.addItem(productNames[i], quantities[i]);
+                var data = item.Split(',');
+                var name = data[0];
+                var quantity = int.Parse(data[1]);
+                var price = double.Parse(data[2]);
 
-                if (prices[i] > 0)
+                _cart.addItem(name, quantity);
+
+                if (price > 0)
                 {
                     expected.Add(new Product
                     {
-                        Name = productNames[i],
-                        Quantity = quantities[i],
-                        Price = prices[i]
+                        Name = name,
+                        Quantity = quantity,
+                        Price = price
                     });
                 }
             }
