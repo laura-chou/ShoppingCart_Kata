@@ -31,7 +31,16 @@
             if (item != null)
             {
                 item.Quantity -= quantity;
-            }   item.Price = _product.getProductPrice(item.Name) * item.Quantity;
+
+                if (item.Quantity <= 0)
+                {
+                    Products.Remove(item);
+                } 
+                else
+                {
+                    item.Price = _product.getProductPrice(item.Name) * item.Quantity;
+                }
+            }
         }
     }
 }
