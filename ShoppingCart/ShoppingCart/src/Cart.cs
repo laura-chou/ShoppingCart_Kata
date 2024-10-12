@@ -4,6 +4,7 @@
     {
         public List<Product>? Products = new List<Product>();
         private Product _product { get; set; }
+        public double TotalPrice { get; set; }
 
         public Cart() { 
             _product = new Product();
