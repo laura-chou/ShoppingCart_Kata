@@ -50,6 +50,7 @@ namespace ShoppingCart
         [Test]
         [TestCase(new[] { "Bread,2" }, new[] { "Bread,1" }, new[] { "Bread,1,0.88" })]
         [TestCase(new[] { "Chicken,1" }, new[] { "Chicken,2" }, new string[] { })]
+        [TestCase(new[] { "Chicken,1" }, new[] { "Apple,1" }, new[] { "Chicken,1,1.83" })]
         public void A02_DeleteItemToCart(string[] addItems, string[] deleteItems, string[] expectedItems)
         {
             foreach (var item in addItems)
