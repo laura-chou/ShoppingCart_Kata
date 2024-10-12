@@ -81,6 +81,16 @@ namespace ShoppingCart
             AssertResultShouldReturn(expected);
         }
 
+        [Test]
+        [TestCase(new string[] { }, 0)]
+        public void A03_CaculateTotalPrice(string[] addItems, double totalPrice)
+        {
+            var expected = new List<Product>();
+            AssertResultShouldReturn(expected);
+
+            _cart.TotalPrice.Should().Be(totalPrice);
+        }
+
         private void AssertResultShouldReturn(List<Product> expected)
         {
             var actual = _cart.Products;
