@@ -49,6 +49,7 @@ namespace ShoppingCart
 
         [Test]
         [TestCase(new[] { "Bread,2" }, new[] { "Bread,1" }, new[] { "Bread,1,0.88" })]
+        [TestCase(new[] { "Chicken,1" }, new[] { "Chicken,2" }, new string[] { })]
         public void A02_DeleteItemToCart(string[] addItems, string[] deleteItems, string[] expectedItems)
         {
             foreach (var item in addItems)
@@ -63,16 +64,18 @@ namespace ShoppingCart
                 _cart.deleteItem(data[0], int.Parse(data[1]));
             }
 
-            var expected = expectedItems.Select(item =>
+            var expected = new List<Product>();
+
+            foreach (var item in expectedItems)
             {
                 var parts = item.Split(',');
-                return new Product
+                expected.Add(new Product
                 {
                     Name = parts[0],
                     Quantity = int.Parse(parts[1]),
                     Price = double.Parse(parts[2])
-                };
-            }).ToList();
+                });
+            }
 
             AssertResultShouldReturn(expected);
         }
