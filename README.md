@@ -176,20 +176,10 @@ applyDiscount("PROMO_5")
 
 expected
 new Cart {
-  Products = new List<Product> 
-  {
-    new Product { 
-      Name = "Tomato",
-      Quantity = 5,
-      Price = 3.65
-    },
-    new Product { 
-      Name = "Corn",
-      Quantity = 10,
-      Price = 15.00
-    }
+  Promotion = new Discount {
+    Code = "PROMO_5",
+    Amount = 0.05
   },
-  Promotion = "5% off with code PROMO_5",
   TotalPrice = 17.72
 }
 ==========================================
@@ -199,15 +189,10 @@ applyDiscount("PROMO_10")
 
 expected
 new Cart {
-  Products = new List<Product> 
-  {
-    new Product { 
-      Name = "Chicken",
-      Quantity = 3,
-      Price = 5.49
-    }
+   Promotion = new Discount {
+    Code = "PROMO_10",
+    Amount = 0.1
   },
-  Promotion = "10% off with code PROMO_10",
   TotalPrice = 4.94
 }
 ==========================================
@@ -217,15 +202,10 @@ applyDiscount("PROMO_100")
 
 expected
 new Cart {
-  Products = new List<Product> 
-  {
-    new Product { 
-      Name = "Bread",
-      Quantity = 2,
-      Price = 1.76
-    }
+  Promotion = new Promotion {
+    Code = "PROMO_10",
+    Amount = 0.1
   },
-  Promotion = "",
   TotalPrice = 1.76
 }
 ```
