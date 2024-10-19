@@ -84,6 +84,7 @@ namespace ShoppingCart
         [Test]
         [TestCase(new string[] { }, 0)]
         [TestCase(new[] { "Corn,1" }, 1.50)]
+        [TestCase(new[] { "Corn,2" }, 3.00)]
         public void A03_CaculateTotalPrice(string[] addItems, double totalPrice)
         {
             foreach (var item in addItems)

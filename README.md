@@ -138,7 +138,6 @@ new Cart {
 計算空購物車的總價格
 expected
 new Cart {
-  Products = new List<Product>(),
   TotalPrice = 0.00
 }
 ==========================================
@@ -147,14 +146,6 @@ addItem("Corn", 1)
 
 expected
 new Cart {
-  Products = new List<Product> 
-  {
-    new Product { 
-      Name = "Corn",
-      Quantity = 1,
-      Price = 1.50
-    }
-  },
   TotalPrice = 1.50
 }
 ==========================================
@@ -163,14 +154,6 @@ addItem("Corn", 2)
 
 expected
 new Cart {
-  Products = new List<Product> 
-  {
-    new Product { 
-      Name = "Corn",
-      Quantity = 2,
-      Price = 3.00
-    }
-  },
   TotalPrice = 3.00
 }
 ==========================================
@@ -181,24 +164,6 @@ addItem("Tomato", 1)
 
 expected
 new Cart {
-  Products = new List<Product> 
-  {
-    new Product { 
-      Name = "Iceberg",
-      Quantity = 3,
-      Price = 6.51
-    },
-    new Product { 
-      Name = "Bread",
-      Quantity = 2,
-      Price = 1.76
-    },
-    new Product { 
-      Name = "Tomato",
-      Quantity = 1,
-      Price = 0.73
-    }
-  },
   TotalPrice = 9.00
 }
 ```
