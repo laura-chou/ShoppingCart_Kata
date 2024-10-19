@@ -83,10 +83,14 @@ namespace ShoppingCart
 
         [Test]
         [TestCase(new string[] { }, 0)]
+        [TestCase(new[] { "Corn,1" }, 1.50)]
         public void A03_CaculateTotalPrice(string[] addItems, double totalPrice)
         {
-            var expected = new List<Product>();
-            AssertResultShouldReturn(expected);
+            foreach (var item in addItems)
+            {
+                var data = item.Split(",");
+                _cart.addItem(data[0], int.Parse(data[1]));
+            }
 
             _cart.TotalPrice.Should().Be(totalPrice);
         }
