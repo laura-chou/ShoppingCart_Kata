@@ -4,7 +4,7 @@
     {
         public List<Product>? Products = new List<Product>();
         private Product _product { get; set; }
-        public double TotalPrice { get; set; }
+        public double TotalPrice => Products.Sum(product => product.Price);
 
         public Cart() { 
             _product = new Product();
