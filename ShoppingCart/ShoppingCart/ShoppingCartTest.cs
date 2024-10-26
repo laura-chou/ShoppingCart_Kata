@@ -107,11 +107,12 @@ namespace ShoppingCart
                 _cart.addItem(data[0], int.Parse(data[1]));
             }
 
-            _cart.applyDiscount("PROMO_5");
+            var promotion = discount.Split(",");
+            _cart.applyDiscount(promotion[0]);
             var expected = new Discount
             {
-                Code = discount.Split(",")[0],
-                Amount = Convert.ToDouble(discount.Split(",")[1])
+                Code = promotion[0],
+                Amount = Convert.ToDouble(promotion[1])
             };
             _cart.Promotion.Should().BeEquivalentTo(expected);
 
