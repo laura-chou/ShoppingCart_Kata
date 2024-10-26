@@ -97,6 +97,27 @@ namespace ShoppingCart
             _cart.TotalPrice.Should().Be(totalPrice);
         }
 
+        [Test]
+        [TestCase(new[] { "Tomato,5", "Corn,10" }, "PROMO_5,0.05", 17.72)]
+        public void A04_UseDiscounts(string[] addItems, string discount, double totalPrice)
+        {
+            foreach (var item in addItems)
+            {
+                var data = item.Split(",");
+                _cart.addItem(data[0], int.Parse(data[1]));
+            }
+
+            _cart.applyDiscount("PROMO_5");
+            var expected = new Discount
+            {
+                Code = discount.Split(",")[0],
+                Amount = Convert.ToDouble(discount.Split(",")[1])
+            };
+            _cart.Promotion.Should().BeEquivalentTo(expected);
+
+            _cart.TotalPrice.Should().Be(totalPrice);
+        }
+
         private void AssertResultShouldReturn(List<Product> expected)
         {
             var actual = _cart.Products;
