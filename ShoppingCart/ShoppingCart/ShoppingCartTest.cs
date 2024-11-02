@@ -99,6 +99,7 @@ namespace ShoppingCart
 
         [Test]
         [TestCase(new[] { "Tomato,5", "Corn,10" }, "PROMO_5,0.05", 17.72)]
+        [TestCase(new[] { "Chicken,3" }, "PROMO_10,0.1", 4.94)]
         public void A04_UseDiscounts(string[] addItems, string discount, double totalPrice)
         {
             foreach (var item in addItems)
