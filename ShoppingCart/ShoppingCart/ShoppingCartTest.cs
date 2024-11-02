@@ -100,6 +100,7 @@ namespace ShoppingCart
         [Test]
         [TestCase(new[] { "Tomato,5", "Corn,10" }, "PROMO_5,0.05", 17.72)]
         [TestCase(new[] { "Chicken,3" }, "PROMO_10,0.1", 4.94)]
+        [TestCase(new[] { "Bread,2" }, "PROMO_100", 1.76)]
         public void A04_UseDiscounts(string[] addItems, string discount, double totalPrice)
         {
             foreach (var item in addItems)
@@ -110,11 +111,16 @@ namespace ShoppingCart
 
             var promotion = discount.Split(",");
             _cart.applyDiscount(promotion[0]);
-            var expected = new Discount
+            
+            var expected = new Discount();
+            if (promotion.Length > 1)
             {
-                Code = promotion[0],
-                Amount = Convert.ToDouble(promotion[1])
-            };
+                expected = new Discount
+                {
+                    Code = promotion[0],
+                    Amount = Convert.ToDouble(promotion[1])
+                };
+            }
             _cart.Promotion.Should().BeEquivalentTo(expected);
 
             _cart.TotalPrice.Should().Be(totalPrice);

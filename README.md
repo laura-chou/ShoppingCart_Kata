@@ -202,10 +202,7 @@ applyDiscount("PROMO_100")
 
 expected
 new Cart {
-  Promotion = new Promotion {
-    Code = "PROMO_10",
-    Amount = 0.1
-  },
+  Promotion = new Discount(),
   TotalPrice = 1.76
 }
 ```
