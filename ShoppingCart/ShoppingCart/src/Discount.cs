@@ -10,9 +10,10 @@
             new Discount{ Code = "PROMO_10", Amount = 0.1 }
         };
 
-        public Discount? getDiscount(string discount)
+        public Discount getDiscount(string discount)
         {
-            return Discounts.FirstOrDefault(p => p.Code.Equals(discount, StringComparison.OrdinalIgnoreCase));
+            var data = Discounts.FirstOrDefault(p => p.Code.Equals(discount, StringComparison.OrdinalIgnoreCase));
+            return data != null ? data : new Discount();
         }
     }
 }

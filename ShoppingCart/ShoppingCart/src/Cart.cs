@@ -11,7 +11,7 @@ namespace ShoppingCart.src
             _discount = new Discount();
         }
 
-        public Discount? Promotion { get; set; }
+        public Discount Promotion { get; set; }
         public double TotalPrice => CalculatePrice();
         private Discount _discount { get; set; }
         private Product _product { get; set; }
