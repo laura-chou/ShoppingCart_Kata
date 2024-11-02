@@ -8,12 +8,13 @@ namespace ShoppingCart.src
         public Cart()
         {
             _product = new Product();
+            _discount = new Discount();
         }
 
-        public Discount Promotion { get; set; }
+        public Discount? Promotion { get; set; }
         public double TotalPrice => CalculatePrice();
+        private Discount _discount { get; set; }
         private Product _product { get; set; }
-        
         public void addItem(string product, int quantity)
         {
             var price = _product.getProductPrice(product);
@@ -31,11 +32,7 @@ namespace ShoppingCart.src
 
         public void applyDiscount(string discount)
         {
-            Promotion = new Discount
-            {
-                Code = discount,
-                Amount = 0.05
-            };
+            Promotion = _discount.getDiscount(discount);
         }
 
         public void deleteItem(string product, int quantity)
