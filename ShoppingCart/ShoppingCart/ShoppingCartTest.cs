@@ -137,8 +137,31 @@ namespace ShoppingCart
                     | Total products: 0                     |
                     | Total price: 0.00 £á                   |
                     -----------------------------------------")]
+        [TestCase(new[] { "Chicken,2", "Corn,1" }, "PROMO_5", @"
+                    -----------------------------------------
+                    | Product    | Price      | Quantity    |
+                    | ---------- | ---------- | ----------- |
+                    | Chicken    | 3.66 £á     | 2           |
+                    | Corn       | 1.50 £á     | 1           |
+                    |---------------------------------------|
+                    | Promotion: 5% off with code PROMO_5   |
+                    |---------------------------------------|
+                    | Total products: 3                     |
+                    | Total price: 4.90 £á                   |
+                    -----------------------------------------")]
         public void A05_PrintShoppingCart(string[] addItems, string discount, string expected)
         {
+            if (addItems.Length > 0)
+            {
+                foreach (var item in addItems)
+                {
+                    var data = item.Split(",");
+                    _cart.addItem(data[0], int.Parse(data[1]));
+                }
+            }
+
+            _cart.applyDiscount(discount);
+
             var actual = _cart.printShoppingCart();
             actual.Should().BeEquivalentTo(expected);
         }

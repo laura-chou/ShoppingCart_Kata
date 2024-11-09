@@ -224,6 +224,7 @@ expected
 ==========================================
 查看購物車中的商品
 addItem("Chicken", 2)
+addItem("Corn", 1)
 applyDiscount("PROMO_5")
 printShoppingCart()
 
@@ -232,10 +233,11 @@ expected
 | Product    | Price      | Quantity    |
 | ---------- | ---------- | ----------- |
 | Chicken    | 3.66 €     | 2           |
+| Corn       | 1.50 €     | 1           |
 |---------------------------------------|
 | Promotion: 5% off with code PROMO_5   |
 |---------------------------------------|
-| Total products: 2                     |
-| Total price: 3.66 €                   |
+| Total products: 3                     |
+| Total price: 4.90 €                   |
 -----------------------------------------
 ```
