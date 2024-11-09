@@ -126,6 +126,22 @@ namespace ShoppingCart
             _cart.TotalPrice.Should().Be(totalPrice);
         }
 
+        [Test]
+        [TestCase(new string[] { }, "", @"-----------------------------------------
+                    | Product    | Price      | Quantity    |
+                    | ---------- | ---------- | ----------- |
+                    |---------------------------------------|
+                    | Promotion:                            |
+                    |---------------------------------------|
+                    | Total products: 0                     |
+                    | Total price: 0.00 £á                   |
+                    -----------------------------------------")]
+        public void A05_PrintShoppingCart(string[] addItems, string discount, string expected)
+        {
+            var actual = _cart.printShoppingCart();
+            actual.Should().BeEquivalentTo(expected);
+        }
+
         private void AssertResultShouldReturn(List<Product> expected)
         {
             var actual = _cart.Products;

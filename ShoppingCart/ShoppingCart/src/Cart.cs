@@ -54,6 +54,11 @@ namespace ShoppingCart.src
             }
         }
 
+        public string printShoppingCart()
+        {
+            throw new NotImplementedException();
+        }
+
         private double CalculatePrice()
         {
             var price = Products.Sum(product => product.Price);
