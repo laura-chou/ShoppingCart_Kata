@@ -56,7 +56,15 @@ namespace ShoppingCart.src
 
         public string printShoppingCart()
         {
-            throw new NotImplementedException();
+            return @"-----------------------------------------
+                    | Product    | Price      | Quantity    |
+                    | ---------- | ---------- | ----------- |
+                    |---------------------------------------|
+                    | Promotion:                            |
+                    |---------------------------------------|
+                    | Total products: 0                     |
+                    | Total price: 0.00 €                   |
+                    -----------------------------------------";
         }
 
         private double CalculatePrice()
