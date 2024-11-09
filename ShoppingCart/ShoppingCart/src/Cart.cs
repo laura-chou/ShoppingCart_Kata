@@ -1,9 +1,21 @@
 ﻿using FluentAssertions.Equivalency;
+using System.Text;
 
 namespace ShoppingCart.src
 {
     public class Cart
     {
+        internal string printTemplate = @"
+                    -----------------------------------------
+                    | Product    | Price      | Quantity    |
+                    | ---------- | ---------- | ----------- |
+                    {ProductRows}
+                    | Promotion: {Promotion}|
+                    |---------------------------------------|
+                    | Total products: {TotalProducts}|
+                    | Total price: {TotalPrice}|
+                    -----------------------------------------";
+
         public List<Product>? Products = new List<Product>();
         public Cart()
         {
@@ -56,15 +68,33 @@ namespace ShoppingCart.src
 
         public string printShoppingCart()
         {
-            return @"-----------------------------------------
-                    | Product    | Price      | Quantity    |
-                    | ---------- | ---------- | ----------- |
-                    |---------------------------------------|
-                    | Promotion:                            |
-                    |---------------------------------------|
-                    | Total products: 0                     |
-                    | Total price: 0.00 €                   |
-                    -----------------------------------------";
+            StringBuilder productRow = new StringBuilder();
+            foreach (var product in Products)
+            {
+                productRow.AppendLine($"| {product.Name.PadRight(10)} | {$"{product.Price.ToString("F2")} €".PadRight(10)} | {product.Quantity.ToString().PadRight(11)} |");
+                productRow.Append(string.Empty.PadRight(12));
+            }
+
+            productRow.Append("|---------------------------------------|");
+
+            var totalProduct = Products.Sum(product => product.Quantity);
+            var promotion = string.Empty;
+
+            var replacements = new Dictionary<string, string>
+            {
+                { "ProductRows", productRow.ToString() },
+                { "Promotion", promotion.PadRight(27) },
+                { "TotalProducts", totalProduct.ToString().PadRight(22) },
+                { "TotalPrice", $"{TotalPrice.ToString("F2")} €".PadRight(25) }
+            };
+
+            foreach (var item in replacements)
+            {
+                string placeholder = $"{{{item.Key}}}";
+                printTemplate = printTemplate.Replace(placeholder, item.Value);
+            }
+
+            return printTemplate;
         }
 
         private double CalculatePrice()
