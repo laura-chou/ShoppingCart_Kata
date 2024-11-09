@@ -5,6 +5,8 @@ namespace ShoppingCart.src
 {
     public class Cart
     {
+        public List<Product>? Products = new List<Product>();
+
         internal string printTemplate = @"
                     -----------------------------------------
                     | Product    | Price      | Quantity    |
@@ -15,8 +17,6 @@ namespace ShoppingCart.src
                     | Total products: {TotalProducts}|
                     | Total price: {TotalPrice}|
                     -----------------------------------------";
-
-        public List<Product>? Products = new List<Product>();
         public Cart()
         {
             _product = new Product();
@@ -72,13 +72,12 @@ namespace ShoppingCart.src
             foreach (var product in Products)
             {
                 productRow.AppendLine($"| {product.Name.PadRight(10)} | {$"{product.Price.ToString("F2")} €".PadRight(10)} | {product.Quantity.ToString().PadRight(11)} |");
-                productRow.Append(string.Empty.PadRight(12));
+                productRow.Append(string.Empty.PadRight(20));
             }
-
             productRow.Append("|---------------------------------------|");
 
             var totalProduct = Products.Sum(product => product.Quantity);
-            var promotion = string.Empty;
+            var promotion = $"{Promotion.Amount * 100}% off with code {Promotion.Code}";
 
             var replacements = new Dictionary<string, string>
             {
